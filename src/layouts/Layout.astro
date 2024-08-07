@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Build Your Package</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-top: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #555;
+        }
+        .feature-item {
+            margin-bottom: 15px;
+        }
+        .feature-item input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .feature-item span {
+            font-weight: bold;
+        }
+        .description {
+            margin-top: 10px;
+            margin-left: 25px;
+            font-size: 14px;
+            color: #666;
+        }
+        .sub-options {
+            margin-top: 10px;
+            margin-left: 25px;
+        }
+        .sub-options input[type="checkbox"] {
+            margin-right: 5px;
+        }
+        .sub-options span {
+            font-weight: normal;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            font-size: 18px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            font-size: 20px;
+            margin-top: 20px;
+            text-align: center;
+            color: #333;
+        }
+        .result p {
+            margin: 0;
+            padding: 15px;
+            background: #e9ecef;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Build Your Package</h1>
+        <form id="package-form">
+            <!-- Indoor Shoot -->
+            <div class="form-group">
+                <label>Indoor Shoot:</label>
+                <div class="feature-item">
+                    <input type="checkbox" name="features" value="Indoor Shoot">
+                    <span>Indoor Shoot</span>
+                </div>
+                <div class="description">
+                    Choose your indoor setting:
+                </div>
+                <div class="sub-options">
+                    <input type="checkbox" name="indoor-options" value="Hotel" data-price="500"> Hotel <span>(500 NAD)</span>
+                    <br>
+                    <input type="checkbox" name="indoor-options" value="Airbnb" data-price="300"> Airbnb <span>(300 NAD)</span>
+                    <br>
+                    <input type="checkbox" name="indoor-options" value="House" data-price="200"> House <span>(200 NAD)</span>
+                </div>
+            </div>
+
+            <!-- Car -->
+            <div class="form-group">
+                <label>Car:</label>
+                <div class="feature-item">
+                    <input type="checkbox" name="features" value="Car">
+                    <span>Car</span>
+                </div>
+                <div class="description">
+                    Choose your car type:
+                </div>
+                <div class="sub-options">
+                    <input type="checkbox" name="car-options" value="Sedan" data-price="1000"> Sedan <span>(1000 NAD)</span>
+                    <br>
+                    <input type="checkbox" name="car-options" value="SUV" data-price="1200"> SUV <span>(1200 NAD)</span>
+                    <br>
+                    <input type="checkbox" name="car-options" value="Luxury" data-price="1500"> Luxury <span>(1500 NAD)</span>
+                </div>
+            </div>
+
+            <!-- Makeup Artist -->
+            <div class="form-group">
+                <label>Makeup Artist:</label>
+                <div class="feature-item">
+                    <input type="checkbox" name="features" value="Makeup Artist">
+                    <span>Makeup Artist</span>
+                </div>
+                <div class="description">
+                    Choose makeup artist service:
+                </div>
+                <div class="sub-options">
+                    <input type="checkbox" name="makeup-options" value="Full Day" data-price="800"> Full Day <span>(800 NAD)</span>
+                    <br>
+                    <input type="checkbox" name="makeup-options" value="Half Day" data-price="400"> Half Day <span>(400 NAD)</span>
+                    <br>
+                    <input type="checkbox" name="makeup-options" value="Per Face" data-price="100"> Per Face <span>(100 NAD)</span>
+                </div>
+            </div>
+
+            <!-- Additional Features -->
+            <!-- Repeat similar blocks for other features like Drone, Lighting Setup, etc. -->
+
+            <button type="button" onclick="calculateTotal()">Calculate Total</button>
+        </form>
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        // Define feature prices
+        const prices = {
+            'Indoor Shoot': 0, // Main feature does not have a price
+            'Car': 0,
+            'Makeup Artist': 0,
+            // Add main features with zero price
+        };
+
+        function calculateTotal() {
+            const form = document.getElementById('package-form');
+            const formData = new FormData(form);
+            const selectedFeatures = formData.getAll('features');
+            const selectedSubOptions = [...form.querySelectorAll('input[type="checkbox"]:checked')];
+            let totalCost = 0;
+
+            selectedSubOptions.forEach(option => {
+                totalCost += parseInt(option.getAttribute('data-price'), 10) || 0;
+            });
+
+            const resultDiv = document.getElementById('result');
+            if (totalCost === 0) {
+                resultDiv.innerHTML = 'Please select at least one feature.';
+            } else {
+                resultDiv.innerHTML = `Total Cost for your selected features: ${totalCost} NAD`;
+            }
+
+            // TODO: Implement PDF generation and form submission
+        }
+    </script>
+</body>
+</html>
